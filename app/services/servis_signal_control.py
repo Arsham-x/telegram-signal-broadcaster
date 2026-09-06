@@ -60,36 +60,14 @@ def signal_list_keyboard(logs):
             f"{entry_price}"
         )
 
-        # =============== CLOR PRIC SIGNAL  ===========================
-
-        position = str(
-            s.get("position", "")
-        ).strip().lower()
-
-        if position in ("buy", "long"):
-            button_style = "success"
-
-        elif position in ("sell", "short"):
-            button_style = "danger"
-
-        else:
-            button_style = "primary"
-
         # =====================================================
         # ساخت دکمه
         # =====================================================
 
-        button_kwargs = {
-            "text": label,
-            "callback_data": f"manage_signal:{real_index}"
-        }
-
-        if button_style:
-            button_kwargs["style"] = button_style
-
         buttons.append([
             InlineKeyboardButton(
-                **button_kwargs
+                text=label,
+                callback_data=f"manage_signal:{real_index}"
             )
         ])
 
