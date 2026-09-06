@@ -1,5 +1,0 @@
-internal = "Don't update ``uv.lock`` in copilot runtime environment"
-[[pull_requests]]
-uid = "4915"
-author_uid = "harshil21"
-closes_threads = []

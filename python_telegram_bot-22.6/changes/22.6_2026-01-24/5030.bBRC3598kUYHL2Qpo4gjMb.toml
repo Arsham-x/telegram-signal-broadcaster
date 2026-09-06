@@ -1,5 +1,0 @@
-bugfixes = "Fix a Bug in Initialization Logic of ``Bot``"
-[[pull_requests]]
-uid = "5030"
-author_uids = ["codomposer"]
-closes_threads = ["5021"]

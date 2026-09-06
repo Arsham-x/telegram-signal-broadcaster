@@ -1,5 +1,0 @@
-internal = "Lock file maintenance"
-[[pull_requests]]
-uid = "5035"
-author_uids = ["renovatebot"]
-closes_threads = []

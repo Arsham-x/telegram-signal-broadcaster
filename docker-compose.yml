@@ -1,0 +1,12 @@
+services:
+  bot:
+    build: .
+    container_name: signal-bot
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      # اگه تو ایران هاستی و تلگرام فیلتره، اینو پر کن:
+      # BOT_PROXY: ${BOT_PROXY:-}
+      TZ: Asia/Tehran
+    volumes:
+      - ./data:/app/data

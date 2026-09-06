@@ -1,5 +1,0 @@
-internal = "Tune Renovate Configuration"
-[[pull_requests]]
-uid = "4968"
-author_uids = ["harshil21"]
-closes_threads = []
