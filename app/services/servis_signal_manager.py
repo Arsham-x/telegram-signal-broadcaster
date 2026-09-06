@@ -636,3 +636,27 @@ def communities_reply_keyboard(market, selected_names=None):
         keyboard,
         resize_keyboard=True
     )
+
+
+# =========================================================
+# CHANNEL HEALTH CHECK
+# =========================================================
+
+async def check_channels_health(bot, chat_ids):
+    """
+    بررسی دسترسی بات به کانال‌ها قبل از ارسال سیگنال.
+
+    خروجی:
+        (healthy_ids, failed_ids)
+    """
+    healthy = []
+    failed = []
+
+    for chat_id in chat_ids:
+        try:
+            await bot.get_chat(chat_id)
+            healthy.append(chat_id)
+        except Exception:
+            failed.append(chat_id)
+
+    return healthy, failed

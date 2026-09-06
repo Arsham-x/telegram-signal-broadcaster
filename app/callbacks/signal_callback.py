@@ -305,6 +305,32 @@ async def _send_signal(
             .build_signal_message_premium(data)
         )
 
+        # =====================================================
+        # چک سلامت کانال‌ها قبل از ارسال
+        # =====================================================
+
+        healthy_ids, failed_ids = (
+            await signal_manager.check_channels_health(
+                context.application.bot,
+                chat_ids
+            )
+        )
+
+        if failed_ids:
+            await query.message.reply_text(
+                f"⚠️ {len(failed_ids)} کانال غیرقابل دسترس:\n"
+                + "\n".join(
+                    str(cid) for cid in failed_ids
+                )
+                + "\n\nبه بقیه ارسال میشه..."
+            )
+
+        if not healthy_ids:
+            await query.message.reply_text(
+                "❌ هیچ کانالی در دسترس نیست!"
+            )
+            return
+
         sent_to = []
         message_map = {}
 
@@ -314,7 +340,7 @@ async def _send_signal(
                 text=message,
                 parse_mode="HTML"
             )
-            for chat_id in chat_ids
+            for chat_id in healthy_ids
         ]
 
         results = await asyncio.gather(
@@ -323,7 +349,7 @@ async def _send_signal(
         )
 
         for chat_id, result in zip(
-            chat_ids,
+            healthy_ids,
             results
         ):
         
