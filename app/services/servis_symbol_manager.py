@@ -3,7 +3,7 @@ import json
 import os
 from telegram import ReplyKeyboardMarkup
 
-from app.settings.config import SYMBOLS_FILE
+from app.settings.config import SYMBOLS_FILE, atomic_json_write
 
 
 def load_symbols():
@@ -34,8 +34,7 @@ def load_symbols():
 
 
 def save_symbols(data):
-    with open(SYMBOLS_FILE, "w", encoding="utf-8") as f:
-        json.dump(data, f, ensure_ascii=False, indent=2)
+    atomic_json_write(SYMBOLS_FILE, data)
 
 
 def get_symbols(category):

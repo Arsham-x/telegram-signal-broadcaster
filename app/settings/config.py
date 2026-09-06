@@ -87,3 +87,40 @@ SYMBOLS_FILE = DATA_DIR / "symbols.json"
 SIGNAL_LOG_FILE = DATA_DIR / "signals_log.json"
 
 SIGNAL_TEXTS_FILE = DATA_DIR / "signal_texts.json"
+
+
+# =========================================================
+# ATOMIC WRITE HELPER
+# =========================================================
+
+import json
+import tempfile
+
+
+def atomic_json_write(filepath, data):
+    """
+    نوشتن ایمن JSON — اول در فایل tmp مینویسه
+    بعد rename میکنه.
+    اگه حین نوشتن کرش بشه، فایل اصلی سالم میمونه.
+    """
+    dir_path = os.path.dirname(str(filepath))
+    os.makedirs(dir_path, exist_ok=True)
+
+    fd, tmp_path = tempfile.mkstemp(
+        dir=dir_path,
+        suffix=".tmp"
+    )
+
+    try:
+        with os.fdopen(fd, "w", encoding="utf-8") as f:
+            json.dump(data, f, ensure_ascii=False, indent=2)
+
+        os.replace(tmp_path, str(filepath))
+
+    except BaseException:
+        # اگه خطا خورد، فایل tmp رو پاک کن
+        try:
+            os.unlink(tmp_path)
+        except OSError:
+            pass
+        raise

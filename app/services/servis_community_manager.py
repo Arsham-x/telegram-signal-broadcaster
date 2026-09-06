@@ -7,6 +7,7 @@ from telegram import ReplyKeyboardMarkup
 from app.settings.config import (
     COMMUNITIES_FILE,
     CHANNELS_FILE,
+    atomic_json_write,
 )
 
 ITEMS_PER_PAGE = 10
@@ -43,17 +44,7 @@ def load_communities():
 
 
 def save_communities(data):
-    with open(
-        COMMUNITIES_FILE,
-        "w",
-        encoding="utf-8"
-    ) as f:
-        json.dump(
-            data,
-            f,
-            ensure_ascii=False,
-            indent=2
-        )
+    atomic_json_write(COMMUNITIES_FILE, data)
 
     # invalidate communities cache in signal_manager
     from app.services import servis_signal_manager as _sm

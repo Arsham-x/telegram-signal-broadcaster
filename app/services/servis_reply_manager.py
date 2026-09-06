@@ -7,7 +7,7 @@ from telegram import (
     InlineKeyboardButton,
 )
 
-from app.settings.config import REPLY_TEXTS_FILE
+from app.settings.config import REPLY_TEXTS_FILE, atomic_json_write
 def load_reply_texts():
     if os.path.exists(REPLY_TEXTS_FILE):
         try:
@@ -20,8 +20,7 @@ def load_reply_texts():
 
 
 def save_reply_texts(texts):
-    with open(REPLY_TEXTS_FILE, "w", encoding="utf-8") as f:
-        json.dump(texts, f, ensure_ascii=False, indent=2)
+    atomic_json_write(REPLY_TEXTS_FILE, texts)
 
 
 def reply_menu_keyboard():

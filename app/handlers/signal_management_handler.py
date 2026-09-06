@@ -1,10 +1,10 @@
-import json
 import asyncio
 
 from telegram import Update
 from telegram.ext import ContextTypes
 
 from app.services import servis_signal_control as signal_control
+from app.settings.config import atomic_json_write
 
 
 async def handle_signal_management(
@@ -166,18 +166,10 @@ async def handle_signal_management(
         # =====================================================
 
         def _write():
-            with open(
+            atomic_json_write(
                 signal_control.SIGNAL_LOG_FILE,
-                "w",
-                encoding="utf-8"
-            ) as f:
-
-                json.dump(
-                    logs,
-                    f,
-                    ensure_ascii=False,
-                    indent=2
-                )
+                logs
+            )
 
         await asyncio.to_thread(_write)
 

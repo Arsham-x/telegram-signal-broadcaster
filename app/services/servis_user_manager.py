@@ -4,6 +4,7 @@ import os
 from telegram import ReplyKeyboardMarkup
 from app.settings.config import (
     USERS_FILE,
+    atomic_json_write,
 )
 # ================== LOAD / SAVE ==================
 def load_users():
@@ -17,8 +18,7 @@ def load_users():
     return []
 
 def save_users(users):
-    with open(USERS_FILE, "w", encoding="utf-8") as f:
-        json.dump(users, f, ensure_ascii=False, indent=2)
+    atomic_json_write(USERS_FILE, users)
 
 # ================== ACCESS ==================
 def get_user_by_id(users, user_id: int):

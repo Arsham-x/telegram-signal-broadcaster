@@ -6,6 +6,7 @@ import os
 
 from app.settings.config import (
     CHANNELS_FILE,
+    atomic_json_write,
 )
 def load_channels():
     if os.path.exists(CHANNELS_FILE):
@@ -14,8 +15,7 @@ def load_channels():
     return []
 
 def save_channels(channels):
-    with open(CHANNELS_FILE, "w", encoding="utf-8") as f:
-        json.dump(channels, f, ensure_ascii=False, indent=2)
+    atomic_json_write(CHANNELS_FILE, channels)
 
 def channel_manage_keyboard():
     keyboard = [

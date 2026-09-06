@@ -2,25 +2,15 @@
 from telegram import Update
 from telegram.ext import ContextTypes
 
-import json
 import asyncio
 
 from app.services import servis_signal_control as signal_control
+from app.settings.config import atomic_json_write
 
 
 def _write_signal_logs_sync(logs):
     """نوشتن لاگ سیگنال‌ها — sync، داخل thread اجرا میشه."""
-    with open(
-        signal_control.SIGNAL_LOG_FILE,
-        "w",
-        encoding="utf-8"
-    ) as f:
-        json.dump(
-            logs,
-            f,
-            ensure_ascii=False,
-            indent=2
-        )
+    atomic_json_write(signal_control.SIGNAL_LOG_FILE, logs)
 
 
 async def signal_manage_callback(

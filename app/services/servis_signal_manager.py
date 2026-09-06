@@ -20,6 +20,7 @@ BASE_DIR = os.path.dirname(
 from app.settings.config import (
     SIGNAL_LOG_FILE,
     COMMUNITIES_FILE,
+    atomic_json_write,
 )
 
 signal_state = {}
@@ -489,23 +490,7 @@ def _save_signal_log_sync(data: dict):
 
     logs.append(data)
 
-    os.makedirs(
-        os.path.dirname(SIGNAL_LOG_FILE),
-        exist_ok=True
-    )
-
-    with open(
-        SIGNAL_LOG_FILE,
-        "w",
-        encoding="utf-8"
-    ) as f:
-
-        json.dump(
-            logs,
-            f,
-            ensure_ascii=False,
-            indent=2
-        )
+    atomic_json_write(SIGNAL_LOG_FILE, logs)
 
 
 async def save_signal_log(data: dict):
