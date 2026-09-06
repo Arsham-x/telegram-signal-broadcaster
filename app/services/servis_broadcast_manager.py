@@ -44,6 +44,12 @@ def broadcast_confirm_keyboard():
     return InlineKeyboardMarkup([
         [
             InlineKeyboardButton(
+                "👁 پیش‌نمایش (PV من)",
+                callback_data="broadcast_preview"
+            )
+        ],
+        [
+            InlineKeyboardButton(
                 "📣 ارسال",
                 callback_data=BROADCAST_CALLBACK
             )
@@ -423,6 +429,53 @@ async def broadcast_callback(
         await query.edit_message_text(
             "❌ ارسال لغو شد."
         )
+
+        return
+
+    # =====================================================
+    # PREVIEW — ارسال به PV خود ادمین
+    # =====================================================
+
+    if query.data == "broadcast_preview":
+
+        message_type = context.user_data.get(
+            "broadcast_message_type"
+        )
+        file_id = context.user_data.get(
+            "broadcast_file_id"
+        )
+        caption = context.user_data.get(
+            "broadcast_caption"
+        )
+        text = context.user_data.get(
+            "broadcast_text"
+        )
+
+        if not message_type:
+            await query.answer(
+                "پیامی برای پیش‌نمایش وجود ندارد.",
+                show_alert=True
+            )
+            return
+
+        try:
+            await send_broadcast_message(
+                bot=context.application.bot,
+                chat_id=query.from_user.id,
+                message_type=message_type,
+                file_id=file_id,
+                text=text,
+                caption=caption
+            )
+            await query.answer(
+                "👁 پیش‌نمایش به PV شما ارسال شد.",
+                show_alert=True
+            )
+        except Exception as e:
+            await query.answer(
+                f"خطا در ارسال پیش‌نمایش: {e}",
+                show_alert=True
+            )
 
         return
 
