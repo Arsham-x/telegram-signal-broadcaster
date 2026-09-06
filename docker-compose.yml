@@ -5,8 +5,10 @@ services:
     restart: unless-stopped
     env_file: .env
     environment:
-      # اگه تو ایران هاستی و تلگرام فیلتره، اینو پر کن:
-      # BOT_PROXY: ${BOT_PROXY:-}
+      # اگه به پروکسی نیاز داری، توی .env پرش کن: BOT_PROXY=socks5://...
       TZ: Asia/Tehran
     volumes:
       - ./data:/app/data
+    # Throne روی 127.0.0.1 گوش میده و از داخل کانتینر قابل دسترسی نیست،
+    # پس از network_mode: host استفاده می‌کنیم (فقط لینوکسی).
+    network_mode: host
