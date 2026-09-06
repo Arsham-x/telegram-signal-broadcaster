@@ -1,0 +1,52 @@
+[
+  {
+    "market": "forex",
+    "symbol": "XAU/USD",
+    "position": "SELL",
+    "leverage": null,
+    "order_type": "MARKET",
+    "entries": [
+      "Market"
+    ],
+    "sl": "394",
+    "tps": [
+      "31"
+    ],
+    "communities": [
+      "تست فارکس"
+    ],
+    "message_ids": {
+      "-1002486881481": 5
+    },
+    "channels": [
+      -1002486881481
+    ],
+    "date": "2026-09-01 19:17:44",
+    "status": "active",
+    "signal_id": 1,
+    "hidden_from_management": false
+  },
+  {
+    "market": "crypto",
+    "symbol": "BTC/USDT",
+    "position": null,
+    "leverage": null,
+    "order_type": null,
+    "entries": [],
+    "sl": null,
+    "tps": [],
+    "communities": [
+      "تست کریپتو"
+    ],
+    "message_ids": {
+      "-1002486881481": 6
+    },
+    "channels": [
+      -1002486881481
+    ],
+    "date": "2026-09-01 19:46:26",
+    "status": "active",
+    "signal_id": 2,
+    "hidden_from_management": false
+  }
+]

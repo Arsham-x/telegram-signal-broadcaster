@@ -1,0 +1,12 @@
+{
+  "crypto": [
+    "Btc.usdt",
+    "Eth.usdt",
+    "BTC/USDT",
+    "ETH/USDT",
+    "SOL/USDT"
+  ],
+  "forex": [
+    "XAU/USD"
+  ]
+}

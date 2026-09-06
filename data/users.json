@@ -1,0 +1,32 @@
+[
+  {
+    "user_id": 6599885931,
+    "username": "setaz_org",
+    "is_admin": false,
+    "is_banned": false
+  },
+  {
+    "user_id": 6947931587,
+    "username": "ArteshYek",
+    "is_admin": true,
+    "is_banned": false
+  },
+  {
+    "user_id": 163527680,
+    "username": "RezaNo89",
+    "is_admin": true,
+    "is_banned": false
+  },
+  {
+    "user_id": 92557833,
+    "username": "Afshin454",
+    "is_admin": true,
+    "is_banned": false
+  },
+  {
+    "user_id": 397468881,
+    "username": "AMIR12_F",
+    "is_admin": true,
+    "is_banned": false
+  }
+]
