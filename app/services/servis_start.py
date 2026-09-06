@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+from datetime import datetime
+
 from telegram import Update
 from telegram.ext import ContextTypes
 
@@ -11,6 +13,41 @@ from app.services.servis_user_manager import (
     register_user,
 )
 from app.services import servis_keyboard as keyboard_service
+from app.services.servis_signal_control import load_signal_logs
+
+
+# =========================================================
+# آمار خلاصه سیگنال‌ها
+# =========================================================
+
+_CLOSED_STATUSES = {"cancel", "sl", "exit", "full_tp"}
+
+
+def _quick_stats() -> str:
+    """یک خط آمار برای پیام خوش‌آمدگویی."""
+    try:
+        logs = load_signal_logs()
+    except Exception:
+        return ""
+
+    if not logs:
+        return ""
+
+    active = 0
+    today_count = 0
+    today_str = datetime.now().strftime("%Y-%m-%d")
+
+    for sig in logs:
+        status = sig.get("status", "active")
+        if status not in _CLOSED_STATUSES:
+            active += 1
+        if sig.get("date", "").startswith(today_str):
+            today_count += 1
+
+    return (
+        f"\n\n📈 سیگنال‌های فعال: {active}"
+        f" | امروز: {today_count}"
+    )
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     users = context.application.bot_data.get("users", [])
@@ -80,8 +117,10 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     # OWNER / ADMIN KEYBOARD
     # =====================================================
 
+    stats = _quick_stats()
+
     await update.message.reply_text(
-        "سلام 👋",
+        f"سلام 👋{stats}",
         reply_markup=keyboard_service.main_keyboard(
             is_owner=owner,
             is_admin=admin
