@@ -1,13 +1,25 @@
+import os
+
 from datetime import time
 from zoneinfo import ZoneInfo
 TOKEN = "توکن"
-ADMIN_ID = 163527680
+
+
+def _get_admin_id() -> int:
+    env_id = os.environ.get("ADMIN_ID", "").strip()
+    if env_id:
+        try:
+            return int(env_id)
+        except ValueError:
+            pass
+    return 163527680
+
+
+ADMIN_ID = _get_admin_id()
 SYMBOLS_PER_PAGE = 6
 DAILY_REPORT_HOUR = 23
 DAILY_REPORT_MINUTE = 59
 DAILY_REPORT_TIMEZONE = ZoneInfo("Asia/Tehran")
-
-import os
 
 # ================== BASE PATH ==================
 
