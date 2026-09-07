@@ -7,12 +7,17 @@ TOKEN = "توکن"
 
 def _get_admin_id() -> int:
     env_id = os.environ.get("ADMIN_ID", "").strip()
-    if env_id:
-        try:
-            return int(env_id)
-        except ValueError:
-            pass
-    return 163527680
+    if not env_id:
+        raise RuntimeError(
+            "ADMIN_ID is not set. "
+            "Add ADMIN_ID=<your-telegram-id> to .env"
+        )
+    try:
+        return int(env_id)
+    except ValueError:
+        raise RuntimeError(
+            f"ADMIN_ID must be a number, got: {env_id!r}"
+        )
 
 
 ADMIN_ID = _get_admin_id()
